@@ -114,7 +114,7 @@
 		player.pauseVideo();
 		playing = false;
 		text.disabled=false;
-		text.setSelectedRange(0,0);
+		text.setSelectionRange(0,0);
 		clearTimeout(timeoutId);
 	}
 
@@ -124,7 +124,7 @@
 			return;
 		}
 		var beat = beats.shift(), ph = phonemes[beat.ch];
-		text.setSelectedRange(beat.iStart,beat.iEnd);
+		text.setSelectionRange(beat.iStart,beat.iEnd);
 		if (ph.start == -1) {
 			player.pauseVideo();
 			timeoutId = setTimeout(function(){
