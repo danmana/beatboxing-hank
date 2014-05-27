@@ -59,13 +59,13 @@
 	};
 
 	function onPlayerReady(event) {
-		player.seekTo(phonemes.a.start, true);
 		player.playVideo();
 	}
 
 	function onPlayerStateChange(event) {
 		if (event.data == YT.PlayerState.PLAYING && firstTime) {
 			firstTime = false;
+			player.seekTo(phonemes.a.start, true);
 			player.pauseVideo();
 		}
 	}
