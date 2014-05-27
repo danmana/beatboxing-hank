@@ -30,7 +30,7 @@
 				btn.className = 'pause';
 				beats = splitIntoPhonemes(text.value);
 				console.log(beats);
-				player.playVideo();
+				nextBeat();
 			} else {
 				endBeats();
 			}
@@ -61,10 +61,11 @@
 
 	function onPlayerStateChange(event) {
 		console.log(event.data);
-		if (event.data == YT.PlayerState.PLAYING && !playing && beats.length) {
+	/*	if (event.data == YT.PlayerState.PLAYING && !playing && beats.length) {
 				playing = true;
 				nextBeat();
 		}
+		*/
 	}
 
 	function splitIntoPhonemes(str) {
@@ -121,6 +122,7 @@
 			}, beat.duration);
 		} else {
 			player.seekTo(beat.start, true);
+			player.playVideo();
 			timeoutId = setTimeout(nextBeat, beat.duration);
 		}
 	}
