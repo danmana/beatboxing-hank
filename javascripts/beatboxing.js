@@ -96,7 +96,7 @@
 			}
 
 		}
-		return ph;
+		return result;
 
 	}
 	
