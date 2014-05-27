@@ -12,7 +12,7 @@
 		o :  { start : 216.25, duration : 300 },
 		u :  { start : 216.75, duration : 300 },
 		' ' :  { start : -1, duration : 200 }
-	}, player, beatbox = '', timeoutId, btn, text, beats = [];
+	}, player, beatbox = '', timeoutId, btn, text, beats = [], playing;
 	
 	btn = document.getElementById('beatbox-button');
 	text = document.getElementById('beatbox-text');
@@ -34,6 +34,7 @@
 				btn.className = 'play';
 				beats = [];
 				player.pauseVideo();
+				playing = false;
 				clearTimeout(timeoutId);
 			}
 		
@@ -58,16 +59,13 @@
 
 	function onPlayerReady(event) {
 		player.seekTo(phonemes.a.start, true);
-		player.playVideo();
+		//player.playVideo();
 	}
 
 	function onPlayerStateChange(event) {
-		if (event.data == YT.PlayerState.PLAYING) {
-			if (btn.className == 'play') {
-				player.pauseVideo();
-			} else {
+		if (event.data == YT.PlayerState.PLAYING && !playing) {
+				playing = true;
 				nextBeat();
-			}
 		}
 	}
 
@@ -104,6 +102,7 @@
 		if (!beats.length) {
 			player.pauseVideo();
 			btn.className = 'play';
+			playing = false;
 			return;
 		}
 		var beat = beats.shift();
