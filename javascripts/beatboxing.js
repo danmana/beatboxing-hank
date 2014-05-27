@@ -31,11 +31,7 @@
 				beats = splitIntoPhonemes(text.value);
 				player.playVideo();
 			} else {
-				btn.className = 'play';
-				beats = [];
-				player.pauseVideo();
-				playing = false;
-				clearTimeout(timeoutId);
+				endBeats();
 			}
 		
 		}, false);
@@ -97,19 +93,29 @@
 		return ph;
 
 	}
+	
+	function endBeats(){
+		btn.className = 'play';
+		beats = [];
+		player.pauseVideo();
+		playing = false;
+		clearTimeout(timeoutId);
+	}
 
 	function nextBeat() {
 		if (!beats.length) {
-			player.pauseVideo();
-			btn.className = 'play';
-			playing = false;
+			endBeats();
 			return;
 		}
 		var beat = beats.shift();
 		if (beat.start == -1) {
 			player.pauseVideo();
 			timeoutId = setTimeout(function(){
-				player.playVideo();
+				if (beats.length) {
+					player.playVideo();
+				} else {
+					endBeats();
+				}
 			}, beat.duration);
 		} else {
 			player.seekTo(beat.start, true);
