@@ -59,7 +59,7 @@
 	}
 
 	function onPlayerStateChange(event) {
-		if (event.data == YT.PlayerState.PLAYING && !playing) {
+		if (event.data == YT.PlayerState.PLAYING && !playing && beats.length) {
 				playing = true;
 				nextBeat();
 		}
