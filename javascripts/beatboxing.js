@@ -1,7 +1,7 @@
 (function () {
 	var phonemes = {
 		t :  { start : 155.75, duration : 200 },
-		ch : { start : 156.20, duration : 300 },
+		c :  { start : 156.20, duration : 300 },
 		s :  { start : 172.25, duration : 200 },
 		sh : { start : 156.83, duration : 300 },
 		f :  { start : 157.20, duration : 300 },
@@ -83,7 +83,7 @@
 					ph.push(phonemes['a']);
 				}
 			} else if (ch == 's') {
-				if (i + 1 < str.length && str[i + 1] == 's') {
+				if (i + 1 < str.length && str[i + 1] == 'h') {
 					ph.push(phonemes['sh']);
 					i++;
 				} else {
