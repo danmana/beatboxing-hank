@@ -1,7 +1,7 @@
 (function () {
 	var phonemes = {
 		t :  { start : 155.75, duration : 200 },
-		c :  { start : 156.20, duration : 300 },
+		ch : { start : 156.20, duration : 300 },
 		s :  { start : 172.25, duration : 200 },
 		sh : { start : 156.83, duration : 300 },
 		f :  { start : 157.20, duration : 300 },
@@ -28,7 +28,8 @@
 			event.preventDefault();
 			if (btn.className == 'play') {
 				btn.className = 'pause';
-				beats = splitIntoPhonemes(text.value);
+				text.disabled=true;
+				beats = splitIntoBeats(text.value);
 				console.log(beats);
 				nextBeat();
 			} else {
@@ -68,28 +69,30 @@
 		*/
 	}
 
-	function splitIntoPhonemes(str) {
+	function splitIntoBeats(str) {
 		var i,
-		ph = [],
+		result = [],
 		ch;
 		for (i = 0; i < str.length; i++) {
 			ch = str[i];
 			if (ch == 'a') {
 				if (i + 1 < str.length && str[i + 1] == 'i') {
-					ph.push('ai');
-					i++;
+					result.push(beat('ai', i, i++));
 				} else {
-					ph.push('a');
+					result.push(beat('a', i, i));
 				}
 			} else if (ch == 's') {
 				if (i + 1 < str.length && str[i + 1] == 'h') {
-					ph.push('sh');
-					i++;
+					result.push(beat('sh', i, i++));
 				} else {
-					ph.push('s');
+					result.push(beat('s', i, i));
 				}
-			} else if (phonemes.hasOwnProperty(ch)) {
-				ph.push(ch);
+			} else if (ch == 'c') {
+				if (i + 1 < str.length && str[i + 1] == 'h') {
+					result.push(beat('ch', i, i++));
+				}
+			}else if (phonemes.hasOwnProperty(ch)) {
+				result.push(beat(ch, i, i));
 			}
 
 		}
@@ -97,11 +100,21 @@
 
 	}
 	
+	function beat(ch, iStart, iEnd) {
+		return {
+			iStart: iStart,
+			iEnd: iEnd,
+			ch: ch
+		};
+	}
+	
 	function endBeats(){
 		btn.className = 'play';
 		beats = [];
 		player.pauseVideo();
 		playing = false;
+		text.disabled=false;
+		text.setSelectedRande(0,0);
 		clearTimeout(timeoutId);
 	}
 
@@ -110,8 +123,9 @@
 			endBeats();
 			return;
 		}
-		var beat = phonemes[beats.shift()];
-		if (beat.start == -1) {
+		var beat = beats.shift(), ph = phonemes[beat.ch];
+		text.setSelectedRande(beat.iStart,beat.iEnd);
+		if (ph.start == -1) {
 			player.pauseVideo();
 			timeoutId = setTimeout(function(){
 				if (beats.length) {
@@ -119,11 +133,11 @@
 				} else {
 					endBeats();
 				}
-			}, beat.duration);
+			}, ph.duration);
 		} else {
-			player.seekTo(beat.start, true);
+			player.seekTo(ph.start, true);
 			player.playVideo();
-			timeoutId = setTimeout(nextBeat, beat.duration);
+			timeoutId = setTimeout(nextBeat, ph.duration);
 		}
 	}
 
