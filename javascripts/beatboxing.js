@@ -57,16 +57,9 @@
 
 	function onPlayerReady(event) {
 		player.seekTo(phonemes.a.start, true);
-		//player.playVideo();
 	}
 
 	function onPlayerStateChange(event) {
-		console.log(event.data);
-	/*	if (event.data == YT.PlayerState.PLAYING && !playing && beats.length) {
-				playing = true;
-				nextBeat();
-		}
-		*/
 	}
 
 	function splitIntoBeats(str) {
@@ -103,7 +96,7 @@
 	function beat(ch, iStart, iEnd) {
 		return {
 			iStart: iStart,
-			iEnd: iEnd,
+			iEnd: iEnd + 1,
 			ch: ch
 		};
 	}
