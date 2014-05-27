@@ -70,19 +70,19 @@
 			ch = str[i];
 			if (ch == 'a') {
 				if (i + 1 < str.length && str[i + 1] == 'i') {
-					result.push(beat('ai', i, i++));
+					result.push(beat('ai', i, ++i));
 				} else {
 					result.push(beat('a', i, i));
 				}
 			} else if (ch == 's') {
 				if (i + 1 < str.length && str[i + 1] == 'h') {
-					result.push(beat('sh', i, i++));
+					result.push(beat('sh', i, ++i));
 				} else {
 					result.push(beat('s', i, i));
 				}
 			} else if (ch == 'c') {
 				if (i + 1 < str.length && str[i + 1] == 'h') {
-					result.push(beat('ch', i, i++));
+					result.push(beat('ch', i, ++i));
 				}
 			}else if (phonemes.hasOwnProperty(ch)) {
 				result.push(beat(ch, i, i));
