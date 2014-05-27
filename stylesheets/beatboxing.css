@@ -1,31 +1,9 @@
-.clearfix:after {
-    content: ".";
-    display: block;
-    clear: both;
-    visibility: hidden;
-    line-height: 0;
-    height: 0;
-}
- 
-.clearfix {
-    display: inline-block;
-}
- 
-html[xmlns] .clearfix {
-    display: block;
-}
- 
-* html .clearfix {
-    height: 1%;
-}
-
-
 #beatbox-button {
 	float: right;
 	display: inline-block;
 	width: 128px;
 	height: 127px;
-	background: url(../YouTube_Play.png) transparent no-repeat 0px 0px;
+	background: url(../images/YouTube_Play.png) transparent no-repeat 0px 0px;
 }
 
 #beatbox-button:hover {
@@ -38,9 +16,9 @@ html[xmlns] .clearfix {
 }
 
 #beatbox-text {
-	width: 490px;
-	min-width: 490px;
-	max-width: 490px;
+	width: 480px;
+	min-width: 480px;
+	max-width: 480px;
 	min-height: 128px;
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
 }

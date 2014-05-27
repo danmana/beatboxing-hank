@@ -11,8 +11,11 @@
 		e :  { start : 173.45, duration : 280 },
 		o :  { start : 216.25, duration : 300 },
 		u :  { start : 216.75, duration : 300 }
-	}, player, beatbox = '', timeoutId;
-
+	}, player, beatbox = '', timeoutId, btn, text;
+	
+	btn = document.getElementById('beatbox-button');
+	text = document.getElementById('beatbox-text');
+	
 	function init() {
 		var tag = document.createElement('script');
 
@@ -20,8 +23,8 @@
 		var firstScriptTag = document.getElementsByTagName('script')[0];
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 		
-		var btn = document.getElementById('beatbox-button');
 		btn.addEventListener('click', function(event) {
+			event.preventDefault();
 			if (btn.className == 'play') {
 				btn.className = 'pause';
 				//TODO: start playing
@@ -50,15 +53,15 @@
 	};
 
 	function onPlayerReady(event) {
-		player.playVideo();
 		player.seekTo(phonemes.a.start, true);
-		player.pauseVideo();
+		player.playVideo();
 	}
 
 	function onPlayerStateChange(event) {
-		if (event.data == YT.PlayerState.PLAYING && !playing && beatbox.length) {
-			playing = true;
-			nextBeat();
+		if (event.data == YT.PlayerState.PLAYING) {
+			if (btn.className == 'play') {
+				player.pauseVideo();
+			}
 		}
 	}
 
