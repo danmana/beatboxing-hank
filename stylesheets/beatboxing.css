@@ -1,0 +1,16 @@
+#beatbox-button {
+	float: right;
+	display: inlien-block;
+	width: 128px;
+	height: 127px;
+	background: url(../YouTube_Play.png) transparent no-repeat 0px 0px;
+}
+
+#beatbox-button:hover {
+	opacity: 0.9;
+	cursor: pointer;
+}
+
+#beatbox-button.pause {
+	background-position: -128px 0px;
+}
