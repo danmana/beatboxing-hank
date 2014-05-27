@@ -12,7 +12,7 @@
 		o :  { start : 216.25, duration : 300 },
 		u :  { start : 216.75, duration : 300 },
 		' ' :  { start : -1, duration : 200 }
-	}, player, beatbox = '', timeoutId, btn, text, beats = [], playing;
+	}, player, beatbox = '', timeoutId, btn, text, beats = [], firstTime = true;
 	
 	btn = document.getElementById('beatbox-button');
 	text = document.getElementById('beatbox-text');
@@ -60,10 +60,14 @@
 
 	function onPlayerReady(event) {
 		player.seekTo(phonemes.a.start, true);
-		player.pauseVideo();
+		player.playVideo();
 	}
 
 	function onPlayerStateChange(event) {
+		if (event.data == YT.PlayerState.PLAYING && firstTime) {
+			firstTime = false;
+			player.pauseVideo();
+		}
 	}
 
 	function splitIntoBeats(str) {
@@ -109,7 +113,6 @@
 		btn.className = 'play';
 		beats = [];
 		player.pauseVideo();
-		playing = false;
 		text.disabled=false;
 		text.setSelectionRange(0,0);
 		clearTimeout(timeoutId);
