@@ -10,8 +10,9 @@
 		ai : { start : 215.70, duration : 350 },
 		e :  { start : 173.45, duration : 280 },
 		o :  { start : 216.25, duration : 300 },
-		u :  { start : 216.75, duration : 300 }
-	}, player, beatbox = '', timeoutId, btn, text;
+		u :  { start : 216.75, duration : 300 },
+		' ' :  { start : -1, duration : 200 }
+	}, player, beatbox = '', timeoutId, btn, text, beats = [];
 	
 	btn = document.getElementById('beatbox-button');
 	text = document.getElementById('beatbox-text');
@@ -27,10 +28,12 @@
 			event.preventDefault();
 			if (btn.className == 'play') {
 				btn.className = 'pause';
-				//TODO: start playing
+				beats = splitIntoPhonemes(text.value);
+				nextBeat();
 			} else {
 				btn.className = 'play';
-				//TODO: stop playing
+				beats = [];
+				clearTimeout(timeoutId);
 			}
 		
 		}, false);
@@ -61,11 +64,13 @@
 		if (event.data == YT.PlayerState.PLAYING) {
 			if (btn.className == 'play') {
 				player.pauseVideo();
+			} else {
+				nextBeat();
 			}
 		}
 	}
 
-	function splitByPhonemes(str) {
+	function splitIntoPhonemes(str) {
 		var i,
 		ph = [],
 		ch;
@@ -95,16 +100,21 @@
 	}
 
 	function nextBeat() {
-
-		if (!beatbox.length) {
+		if (!beats.length) {
 			player.pauseVideo();
-			playing = false;
+			btn.className = 'play';
 			return;
 		}
-		var beat = beatbox.shift(),
-		ph = phonemes[beat];
-		player.seekTo(ph.start, true);
-		timeoutId = setTimeout(nextBeat, ph.duration);
+		var beat = beats.shift();
+		if (beat.start == -1) {
+			player.pauseVideo();
+			timeoutId = setTimeout(function(){
+				player.playVideo();
+			}, beat.duration);
+		} else {
+			player.seekTo(beat.start, true);
+			timeoutId = setTimeout(nextBeat, beat.duration);
+		}
 	}
 
 	init();
