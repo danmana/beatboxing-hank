@@ -29,10 +29,11 @@
 			if (btn.className == 'play') {
 				btn.className = 'pause';
 				beats = splitIntoPhonemes(text.value);
-				nextBeat();
+				player.playVideo();
 			} else {
 				btn.className = 'play';
 				beats = [];
+				player.pauseVideo();
 				clearTimeout(timeoutId);
 			}
 		
