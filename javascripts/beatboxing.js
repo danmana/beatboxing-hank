@@ -29,6 +29,7 @@
 			if (btn.className == 'play') {
 				btn.className = 'pause';
 				beats = splitIntoPhonemes(text.value);
+				console.log(beats);
 				player.playVideo();
 			} else {
 				endBeats();
@@ -59,6 +60,7 @@
 	}
 
 	function onPlayerStateChange(event) {
+		console.log(event.data);
 		if (event.data == YT.PlayerState.PLAYING && !playing && beats.length) {
 				playing = true;
 				nextBeat();
@@ -73,20 +75,20 @@
 			ch = str[i];
 			if (ch == 'a') {
 				if (i + 1 < str.length && str[i + 1] == 'i') {
-					ph.push(phonemes['ai']);
+					ph.push('ai');
 					i++;
 				} else {
-					ph.push(phonemes['a']);
+					ph.push('a');
 				}
 			} else if (ch == 's') {
 				if (i + 1 < str.length && str[i + 1] == 'h') {
-					ph.push(phonemes['sh']);
+					ph.push('sh');
 					i++;
 				} else {
-					ph.push(phonemes['s']);
+					ph.push('s');
 				}
 			} else if (phonemes.hasOwnProperty(ch)) {
-				ph.push(phonemes[ch]);
+				ph.push(ch);
 			}
 
 		}
@@ -107,7 +109,7 @@
 			endBeats();
 			return;
 		}
-		var beat = beats.shift();
+		var beat = phonemes[beats.shift()];
 		if (beat.start == -1) {
 			player.pauseVideo();
 			timeoutId = setTimeout(function(){
