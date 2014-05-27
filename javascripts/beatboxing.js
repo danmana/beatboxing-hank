@@ -19,6 +19,21 @@
 		tag.src = "https://www.youtube.com/iframe_api";
 		var firstScriptTag = document.getElementsByTagName('script')[0];
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		
+		var btn = document.getElementById('beatbox-button');
+		btn.addEventListener('click', function(event) {
+			if (btn.className == 'play') {
+				btn.className = 'pause';
+				//TODO: start playing
+			} else {
+				btn.className = 'play';
+				//TODO: stop playing
+			}
+		
+		}, false);
+		
+		
+		
 	}
 
 	window.onYouTubeIframeAPIReady = function () {
@@ -35,7 +50,9 @@
 	};
 
 	function onPlayerReady(event) {
-		event.target.playVideo();
+		player.playVideo();
+		player.seekTo(phonemes.a.start, true);
+		player.pauseVideo();
 	}
 
 	function onPlayerStateChange(event) {
