@@ -114,7 +114,7 @@
 			player.pauseVideo();
 			timeoutId = setTimeout(function(){
 				if (beats.length) {
-					player.playVideo();
+					nextBeat();
 				} else {
 					endBeats();
 				}
