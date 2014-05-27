@@ -47,6 +47,9 @@
 				height : '390',
 				width : '640',
 				videoId : 's9shPouRWCs',
+				playerVars: {
+					controls: 0
+				},
 				events : {
 					'onReady' : onPlayerReady,
 					'onStateChange' : onPlayerStateChange
@@ -57,6 +60,7 @@
 
 	function onPlayerReady(event) {
 		player.seekTo(phonemes.a.start, true);
+		player.pauseVideo();
 	}
 
 	function onPlayerStateChange(event) {
