@@ -23,6 +23,11 @@
 	box-shadow: 0 0 10px rgba(0,0,0,.1);
 }
 
+#project_tagline span {
+	display: block;
+	font-size: 16px;
+}
+
 
 
 
